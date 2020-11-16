@@ -1,0 +1,39 @@
+{
+  "name": "devcampers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "author": "Brainean",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.12",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "node-geocoder": "^3.27.0",
+    "slugify": "^1.4.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "ndb": "^1.1.5",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
