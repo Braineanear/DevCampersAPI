@@ -18,7 +18,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
 
   // 2) Check if user exist
   if (!user) {
-    return next(new AppError(`No review with the id of ${req.params.id}`, 404));
+    return next(new AppError(`No user with the id of ${req.params.id}`, 404));
   }
 
   res.status(200).json({
@@ -48,7 +48,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
   // 2) Check if user exist
   if (!user) {
-    return next(new AppError(`No review with the id of ${req.params.id}`, 404));
+    return next(new AppError(`No user with the id of ${req.params.id}`, 404));
   }
 
   // 3) Update user
@@ -72,7 +72,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 
   // 2) Check if user exist
   if (!user) {
-    return next(new AppError(`No review with the id of ${req.params.id}`, 404));
+    return next(new AppError(`No user with the id of ${req.params.id}`, 404));
   }
 
   // 3) Delete user

@@ -9,6 +9,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const compression = require('compression');
+const moesif = require('moesif-nodejs');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -68,6 +69,20 @@ app.use(cors());
 app.options('*', cors());
 
 app.use(compression());
+
+const moesifMiddleware = moesif({
+  applicationId:
+    'eyJhcHAiOiIxOTg6MzE2IiwidmVyIjoiMi4wIiwib3JnIjoiODg6OTAwIiwiaWF0IjoxNjA0MTg4ODAwfQ.HQMzwDbik4-QX8EfRjJT_17m4e7jfLx-NO_rFB_jAZ0',
+
+  // Optional hook to link API calls to users
+  identifyUser: function (req, res) {
+    return req.user ? req.user.id : undefined;
+  }
+});
+moesifMiddleware.startCaptureOutgoing();
+
+// Enable the Moesif middleware to start logging incoming API Calls
+app.use(moesifMiddleware);
 
 // Routes
 app.use('/api/v1/bootcamps', bootcampRouter);

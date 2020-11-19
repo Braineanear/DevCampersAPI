@@ -32,6 +32,9 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   if (req.query.select) {
     const fields = req.query.select.split(',').join(' ');
     query = query.select(fields);
+  } else {
+    //Execluding __v which mongo create on each record to use it by using select and putting -
+    query = query.select('-__v');
   }
 
   // Sort
