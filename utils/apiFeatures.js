@@ -22,10 +22,10 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   );
 
   // Finding resource
-  query = model.find(JSON.parse(queryStr));
+  query = model.find(JSON.parse(queryStr)).lean();
 
   if (!query) {
-    return next(new AppError('No Document Found', 400));
+    return next(new AppError('No Data Found', 400));
   }
 
   // Select Fields
@@ -57,12 +57,12 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   }
 
   // Executing query
-  const results = await query;
+  query = await query;
 
   res.advancedResults = {
-    success: true,
-    count: results.length,
-    data: results
+    status: 'success',
+    results: query.length,
+    data: query
   };
 
   next();
