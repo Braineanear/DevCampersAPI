@@ -17,7 +17,7 @@ exports.getAllBootcamps = catchAsync(async (req, res, next) => {
 // @access  Public
 exports.getBootcamp = catchAsync(async (req, res, next) => {
   // 1) Get bootcamp from database
-  const bootcamp = await Bootcamp.findById(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id).lean();
 
   // 2) Check if bootcamp exist
   if (!bootcamp) {
@@ -40,7 +40,9 @@ exports.createBootcamp = catchAsync(async (req, res, next) => {
   req.body.user = req.user.id;
 
   // 2) Check for published bootcamp
-  const publishedBootcamp = await Bootcamp.findOne({ user: req.user.id });
+  const publishedBootcamp = await Bootcamp.findOne({
+    user: req.user.id
+  }).lean();
 
   // 3) If the user is not an admin, they can only add one bootcamp
   if (publishedBootcamp && req.user.role !== 'admin') {
@@ -55,7 +57,7 @@ exports.createBootcamp = catchAsync(async (req, res, next) => {
   const bootcamp = await Bootcamp.create(req.body);
 
   res.status(201).json({
-    success: true,
+    status: 'success',
     data: bootcamp
   });
 });
@@ -65,7 +67,7 @@ exports.createBootcamp = catchAsync(async (req, res, next) => {
 // @access  Private
 exports.updateBootcamp = catchAsync(async (req, res, next) => {
   // 1) Get bootcamp from database
-  let bootcamp = await Bootcamp.findById(req.params.id);
+  let bootcamp = await Bootcamp.findById(req.params.id).lean();
 
   // 2) Check if bootcamp exist
   if (!bootcamp) {
@@ -100,7 +102,7 @@ exports.updateBootcamp = catchAsync(async (req, res, next) => {
 // @access  Private
 exports.deleteBootcamp = catchAsync(async (req, res, next) => {
   // 1) Get bootcamp from database
-  const bootcamp = await Bootcamp.findById(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id).lean();
 
   // 2) Check if bootcamp exist
   if (!bootcamp) {
@@ -119,7 +121,7 @@ exports.deleteBootcamp = catchAsync(async (req, res, next) => {
     );
   }
 
-  await bootcamp.remove();
+  await Bootcamp.deleteOne({ _id: req.params.id });
 
   res.status(200).json({
     status: 'success',
@@ -145,10 +147,10 @@ exports.getBootcampsInRadius = catchAsync(async (req, res, next) => {
 
   const bootcamps = await Bootcamp.find({
     location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
-  });
+  }).lean();
 
   res.status(200).json({
-    success: true,
+    status: 'success',
     results: bootcamps.length,
     data: bootcamps
   });
@@ -159,7 +161,7 @@ exports.getBootcampsInRadius = catchAsync(async (req, res, next) => {
 // @access  Private
 exports.bootcampPhotoUpload = catchAsync(async (req, res, next) => {
   // 1) Get bootcamp from database
-  const bootcamp = await Bootcamp.findById(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id).lean();
 
   // 2) Check if bootcamp exist
   if (!bootcamp) {

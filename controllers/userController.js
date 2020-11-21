@@ -22,7 +22,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({
-    success: 'success',
+    status: 'success',
     data: user
   });
 });
@@ -33,8 +33,8 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res, next) => {
   const user = await User.create(req.body);
 
-  res.status(201).json({
-    success: 'success',
+  res.status(200).json({
+    status: 'success',
     data: user
   });
 });
@@ -44,21 +44,18 @@ exports.createUser = catchAsync(async (req, res, next) => {
 // @access    Private/Admin
 exports.updateUser = catchAsync(async (req, res, next) => {
   // 1) Get user from database
-  let user = await User.findById(req.params.id);
-
-  // 2) Check if user exist
-  if (!user) {
-    return next(new AppError(`No user with the id of ${req.params.id}`, 404));
-  }
-
-  // 3) Update user
-  user = await User.findByIdAndUpdate(req.params.id, req.body, {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
   });
 
+  // 2) Check if user exist to update the data or not
+  if (!user) {
+    return next(new AppError(`No user with the id of ${req.params.id}`, 404));
+  }
+
   res.status(200).json({
-    success: 'success',
+    status: 'success',
     data: user
   });
 });
@@ -68,18 +65,15 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 // @access    Private/Admin
 exports.deleteUser = catchAsync(async (req, res, next) => {
   // 1) Get user from database
-  const user = await User.findById(req.params.id);
+  const user = await User.findByIdAndDelete(req.params.id);
 
-  // 2) Check if user exist
+  // 2) Check if user exist to delete the data or not
   if (!user) {
     return next(new AppError(`No user with the id of ${req.params.id}`, 404));
   }
 
-  // 3) Delete user
-  await User.findByIdAndDelete(req.params.id);
-
   res.status(200).json({
-    success: 'success',
+    status: 'success',
     data: {}
   });
 });
@@ -88,11 +82,11 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 // @route     GET /api/v1/users/me
 // @access    Private/Current User
 exports.getMe = catchAsync(async (req, res, next) => {
-  // user is already available in req due to the protect middleware
+  // User is already available in req due to the protect middleware
   const { user } = req;
 
   res.status(200).json({
-    success: 'success',
+    status: 'success',
     data: user
   });
 });
@@ -101,10 +95,11 @@ exports.getMe = catchAsync(async (req, res, next) => {
 // @route     DELETE /api/v1/users/deleteMe
 // @access    Private/Current User
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndDelete(req.user.id);
+  await User.deleteOne({ _id: req.user.id });
 
   res.status(200).json({
-    success: 'success'
+    status: 'success',
+    data: {}
   });
 });
 

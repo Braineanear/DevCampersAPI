@@ -11,15 +11,17 @@ exports.getReviews = catchAsync(async (req, res, next) => {
   // Get all reviews for a specific bootcamp id
   if (req.params.bootcampId) {
     // 1) Get all reviews related to the bootcamp id
-    const reviews = await Review.find({ bootcamp: req.params.bootcampId });
+    const reviews = await Review.find({
+      bootcamp: req.params.bootcampId
+    }).lean();
 
     // 2) Check if there is any reviews related to the bootcamp id
     if (!reviews) {
       return next(new AppError('No Courses Found', 400));
     }
     return res.status(200).json({
-      success: true,
-      count: reviews.length,
+      status: 'success',
+      results: reviews.length,
       data: reviews
     });
   }
@@ -33,7 +35,7 @@ exports.getReviews = catchAsync(async (req, res, next) => {
 // @access    Public
 exports.getReview = catchAsync(async (req, res, next) => {
   // 1) Get review from database and populate the bootcamp
-  const review = await Review.findById(req.params.id).populate({
+  const review = await Review.findById(req.params.id).lean().populate({
     path: 'bootcamp',
     select: 'name description'
   });
@@ -46,7 +48,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: review
   });
 });
@@ -59,7 +61,7 @@ exports.addReview = catchAsync(async (req, res, next) => {
   req.body.user = req.user.id;
 
   // 1) Get bootcamp from database
-  const bootcamp = await Bootcamp.findById(req.params.bootcampId);
+  const bootcamp = await Bootcamp.findById(req.params.bootcampId).lean();
 
   // 2) Check if bootcamp exist
   if (!bootcamp) {
@@ -71,7 +73,7 @@ exports.addReview = catchAsync(async (req, res, next) => {
   const review = await Review.create(req.body);
 
   res.status(201).json({
-    success: true,
+    status: 'success',
     data: review
   });
 });
@@ -81,15 +83,15 @@ exports.addReview = catchAsync(async (req, res, next) => {
 // @access    Private
 exports.updateReview = catchAsync(async (req, res, next) => {
   // 1) Get review from database
-  let review = await Review.findById(req.params.id);
+  let review = await Review.findById(req.params.id).lean();
 
-  // 2) review if course exist
+  // 2) Review if course exist
   if (!review) {
     return next(new AppError(`No review with the id of ${req.params.id}`, 404));
   }
 
   // 3) Make sure review belongs to user or user is admin
-  if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (review.user.toString() !== req.user.id) {
     return next(new AppError(`Not authorized to update review`, 401));
   }
 
@@ -102,7 +104,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
   review.save();
 
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: review
   });
 });
@@ -112,7 +114,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
 // @access    Private
 exports.deleteReview = catchAsync(async (req, res, next) => {
   // 1) Get review from database
-  const review = await Review.findById(req.params.id);
+  const review = await Review.findById(req.params.id).lean();
 
   // 2) Check if review exist
   if (!review) {
@@ -120,15 +122,15 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
   }
 
   // 3) Make sure review belongs to user or user is admin
-  if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (review.user.toString() !== req.user.id) {
     return next(new AppError(`Not authorized to update review`, 401));
   }
 
   // 4) Remove review
-  await review.remove();
+  await Review.deleteOne({ _id: req.params.id });
 
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: {}
   });
 });
