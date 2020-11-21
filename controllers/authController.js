@@ -16,20 +16,21 @@ const signToken = (id) => {
 
 // Get token, create cookie and send response
 const createSendToken = (user, statusCode, res) => {
-  // Create token
+  // 1) Create token
   const token = signToken(user._id);
 
+  // 2) Set the httpOnly cookie Options
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true, // cookie cannot be accessed or modified in any way by the browser
+    httpOnly: true, // Cookie cannot be accessed or modified in any way by the browser
     secure: false
   };
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  //Remove the password from the output
+  // 3) Remove the password from the output
   user.password = undefined;
 
   res.status(statusCode).cookie('jwt', token, cookieOptions).json({
@@ -47,6 +48,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const user = await User.create({
     name: req.body.name,
     email: req.body.email,
+    role: req.body.role,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
@@ -108,9 +110,9 @@ exports.logout = catchAsync(async (req, res, next) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-
   res.status(200).json({
-    success: true
+    status: 'success',
+    messege: 'You have been successfully logged out!'
   });
 });
 
@@ -119,13 +121,10 @@ exports.logout = catchAsync(async (req, res, next) => {
 // @access    No Access
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting the token and check if it's there
-  let token;
+  let token = '';
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
+  if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
