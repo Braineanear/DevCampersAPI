@@ -9,7 +9,6 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const compression = require('compression');
-const moesif = require('moesif-nodejs');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -31,17 +30,6 @@ app.use(cookieParser());
 
 // Set security HTTP headers
 app.use(helmet());
-
-// Development logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
-
-// Request time
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -70,19 +58,18 @@ app.options('*', cors());
 
 app.use(compression());
 
-const moesifMiddleware = moesif({
-  applicationId:
-    'eyJhcHAiOiIxOTg6MzE2IiwidmVyIjoiMi4wIiwib3JnIjoiODg6OTAwIiwiaWF0IjoxNjA0MTg4ODAwfQ.HQMzwDbik4-QX8EfRjJT_17m4e7jfLx-NO_rFB_jAZ0',
+app.disable('x-powered-by');
 
-  // Optional hook to link API calls to users
-  identifyUser: function (req, res) {
-    return req.user ? req.user.id : undefined;
-  }
+// Development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// Request time
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
 });
-moesifMiddleware.startCaptureOutgoing();
-
-// Enable the Moesif middleware to start logging incoming API Calls
-app.use(moesifMiddleware);
 
 // Routes
 app.use('/api/v1/bootcamps', bootcampRouter);
