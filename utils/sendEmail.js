@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
 
 const sendEmail = async (options) => {
   //1) Create a transporter
