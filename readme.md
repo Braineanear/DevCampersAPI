@@ -1,47 +1,97 @@
-# DevCamper Backend API Specifications
+<h1 align="center">
+  <br>
+  DevCamper Backend API Specifications
+  <br>
+</h1>
 
-## Tools
+<h4 align="center">Backend API for DevCamper application, which is a bootcamp directory website built on top of <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>.</h4>
 
-- Node.js - https://nodejs.org/en/
-- VSCode - https://code.visualstudio.com/
-- Postman - https://www.getpostman.com/
-- Git - https://git-scm.com/
-- MongoDB - https://www.mongodb.com/
-- MailTrap - https://mailtrap.io/
-- Docgen - https://github.com/thedevsaddam/docgen
-- MapQuest Dev API - https://developer.mapquest.com/
+ <p align="center">
+ <a href="#deployed-version">Demo</a> •
+  <a href="#api-usage">API Usage</a> •
+  <a href="#deployment">Deployment</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#build-with">Build With</a> •
+  <a href="#npm-packages">NPM Packages</a> •
+  <a href="#demonstration">Demonstration</a> •
+  <a href="#future-updates">Future Updates</a> • 
+  <a href="#known-bugs">Known Bugs</a> • 
+  <a href="#acknowledgement">Acknowledgement</a>
+</p>
+
+## Deployed Version
+Live demo (Feel free to visit) 👉 : https://dev-api-campers.herokuapp.com
+
+## API Usage
+
+Check [DevCampers API Documentation](https://documenter.getpostman.com/view/11050349/TVeta5KS) for more info.
+
+## Deployment
+The website is deployed with git into heroku. Below are the steps taken:
+```
+git init
+git add -A
+git commit -m "Commit message"
+heroku login
+heroku create
+heroku config:set CONFIG_KEY=CONFIG_VALUE
+git push heroku master
+heroku open
+```
+
+## Installation
+You can fork the app or you can git-clone the app into your local machine. Once done that, please install all the dependencies by running
+```
+$ npm i
+$ npm start
+```
+## Build With
+
+* [Node.js](https://nodejs.org/en) - JS runtime environment
+* [VSCode](https://code.visualstudio.com)
+* [Express](http://expressjs.com/) - The web framework used
+* [Mongoose](https://mongoosejs.com/) - Object Data Modelling (ODM) library
+* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) - Cloud database service
+* [Postman](https://www.getpostman.com/) - API testing
+* [Git](https://git-scm.com)
+* [MailTrap](https://mailtrap.io) - Email delivery platform
+* [MapQuest Dev API](https://developer.mapquest.com)
+* [Heroku](https://www.heroku.com/) - Cloud platform
+
 
 ## NPM Packages
 
-- dotenv - https://github.com/motdotla/dotenv#readme
-- morgan - https://github.com/expressjs/morgan
-- multer - https://github.com/expressjs/multer
-- eslint - https://github.com/eslint/eslint
-- eslint-config-airbnb - https://github.com/airbnb/javascript
-- eslint-config-prettier - https://github.com/prettier/eslint-config-prettier
-- eslint-plugin-import - https://github.com/prettier/eslint-config-prettier
-- eslint-plugin-jsx-a11y - https://github.com/evcohen/eslint-plugin-jsx-a11y
-- eslint-plugin-node - https://github.com/mysticatea/eslint-plugin-node
-- eslint-plugin-prettier - https://github.com/mysticatea/eslint-plugin-node
-- eslint-plugin-react - https://github.com/yannickcr/eslint-plugin-react
-- ndb - https://github.com/GoogleChromeLabs/ndb
-- prettier - https://github.com/prettier/prettier
-- nodemon - https://github.com/remy/nodemon
-- chalk - https://github.com/chalk/chalk
-- slugify - https://github.com/simov/slugify
-- node-geocoder - https://github.com/nchaulet/node-geocoder
-- bcryptjs - https://github.com/dcodeIO/bcrypt.js#readme
-- jsonwebtoken - https://github.com/auth0/node-jsonwebtoken
-- nodemailer - https://nodemailer.com/about/
-- express-mongo-sanitize - https://github.com/fiznool/express-mongo-sanitize#readme
-- xss-clean - https://github.com/jsonmaur/xss-clean
-- helmet - https://github.com/helmetjs/helmet
-- hpp - https://github.com/analog-nico/hpp
-- express-rate-limit - https://github.com/nfriedly/express-rate-limit
-- cors - https://github.com/expressjs/cors
-- pm2 - https://github.com/Unitech/pm2
+- [dotenv](https://github.com/motdotla/dotenv#readme)
+- [morgan](https://github.com/expressjs/morgan)
+- [multer](https://github.com/expressjs/multer)
+- [eslint](https://github.com/eslint/eslint)
+- [eslint-config-airbnb](https://github.com/airbnb/javascript)
+- [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)
+- [eslint-plugin-import](https://github.com/prettier/eslint-config-prettier)
+- [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
+- [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node)
+- [eslint-plugin-prettier](https://github.com/mysticatea/eslint-plugin-node)
+- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+- [ndb](https://github.com/GoogleChromeLabs/ndb)
+- [prettier](https://github.com/prettier/prettier)
+- [nodemon](https://github.com/remy/nodemon)
+- [chalk](https://github.com/chalk/chalk)
+- [slugify](https://github.com/simov/slugify)
+- [node-geocoder](https://github.com/nchaulet/node-geocoder)
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js#readme)
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+- [nodemailer](https://nodemailer.com/about)
+- [express-mongo-sanitize](https://github.com/fiznool/express-mongo-sanitize#readme)
+- [xss-clean](https://github.com/jsonmaur/xss-clean)
+- [helmet](https://github.com/helmetjs/helmet)
+- [hpp](https://github.com/analog-nico/hpp)
+- [express-rate-limit](https://github.com/nfriedly/express-rate-limit)
+- [cors](https://github.com/expressjs/cors)
+- [validator](https://www.npmjs.com/package/validator)
+- [compression](https://www.npmjs.com/package/compression)
 
-### Bootcamps
+## Demonstration
+### 1) Bootcamps
 - List all bootcamps in the database
    * Pagination
    * Select specific fields in result
@@ -66,7 +116,7 @@
 - Calculate the average cost of all courses for a bootcamp
 - Calculate the average rating from the reviews for a bootcamp
 
-### Courses
+### 2) Courses
 - List all courses for bootcamp
 - List all courses in general
   * Pagination, filtering, etc
@@ -81,7 +131,7 @@
 - Delete course
   * Owner only
   
-### Reviews
+### 3) Reviews
 - List all reviews for a bootcamp
 - List all reviews in general
   * Pagination, filtering, etc
@@ -94,7 +144,7 @@
 - Delete review
   * Owner only
 
-### Users & Authentication
+### 4) Users & Authentication
 - Authentication will be ton using JWT/cookies
   * JWT and cookie should expire in 30 days
 - User registration
@@ -120,3 +170,16 @@
 - User CRUD
   * Admin only
 - Users can only be made admin by updating the database field manually
+
+## Future Updates
+
+* Create Front-End design for the api
+* Improve authentication and authorization
+* And More ! There's always room for improvement!
+
+## Known Bugs
+Feel free to email me at mle.mahmoud.yasser@gmail.com if you run into any issues or have questions, ideas or concerns.
+Please enjoy and feel free to share your opinion, constructive criticism, or comments about my work. Thank you! 🙂
+# Acknowledgement
+
+* This project is part of the online course I've taken at Udemy. Thanks to Brad Traversy for creating this awesome course! Link to the course: [Node.js API Masterclass With Express & MongoDB](https://www.udemy.com/course/nodejs-api-masterclass)

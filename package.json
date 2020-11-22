@@ -1,7 +1,7 @@
 {
   "name": "devcampers",
   "version": "1.0.0",
-  "description": "",
+  "description": "Devcamper backend API",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
