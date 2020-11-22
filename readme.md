@@ -55,7 +55,7 @@ $ npm start
 * [Postman](https://www.getpostman.com/) - API testing
 * [Git](https://git-scm.com) - Open source distributed version control system
 * [MailTrap](https://mailtrap.io) - Email delivery platform
-* [MapQuest Dev API](https://developer.mapquest.com)
+* [MapQuest Dev API](https://developer.mapquest.com) - Free online web mapping service
 * [Heroku](https://www.heroku.com/) - Cloud platform
 
 
