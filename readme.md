@@ -48,12 +48,12 @@ $ npm start
 ## Build With
 
 * [Node.js](https://nodejs.org/en) - JS runtime environment
-* [VSCode](https://code.visualstudio.com)
+* [VSCode](https://code.visualstudio.com) - Free source-code editor made by Microsoft
 * [Express](http://expressjs.com/) - The web framework used
 * [Mongoose](https://mongoosejs.com/) - Object Data Modelling (ODM) library
 * [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) - Cloud database service
 * [Postman](https://www.getpostman.com/) - API testing
-* [Git](https://git-scm.com)
+* [Git](https://git-scm.com) - Open source distributed version control system
 * [MailTrap](https://mailtrap.io) - Email delivery platform
 * [MapQuest Dev API](https://developer.mapquest.com)
 * [Heroku](https://www.heroku.com/) - Cloud platform
