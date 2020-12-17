@@ -12,11 +12,16 @@ const Course = require('../models/courseModel');
 const User = require('../models/userModel');
 const Review = require('../models/reviewModel');
 
+const DB = process.env.DATABASE_CONNECTION.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+);
+
 mongoose.set('autoIndex', true);
 
 const connectDB = async () => {
   const con = await mongoose.connect(
-    'mongodb+srv://Armar:01004468937@devcampers.uj4am.mongodb.net/devcampers',
+    DB,
     {
       useNewUrlParser: true,
       useCreateIndex: true,
