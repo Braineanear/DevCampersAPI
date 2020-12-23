@@ -12,24 +12,19 @@ const Course = require('../models/courseModel');
 const User = require('../models/userModel');
 const Review = require('../models/reviewModel');
 
-const DB = process.env.DATABASE_CONNECTION.replace(
-    '<PASSWORD>',
-    process.env.DATABASE_PASSWORD
-);
+const DB =
+  'mongodb+srv://Armar:01004468937@apis.uj4am.mongodb.net/devcampers?retryWrites=true&w=majority';
 
 mongoose.set('autoIndex', true);
 
 const connectDB = async () => {
-  const con = await mongoose.connect(
-    DB,
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-      autoIndex: true
-    }
-  );
+  const con = await mongoose.connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+    autoIndex: true
+  });
 
   console.log(
     chalk.bgGreen.black(`MongoDB Connected: ${con.connection.host}.`)
