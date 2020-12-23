@@ -12,8 +12,10 @@ const Course = require('../models/courseModel');
 const User = require('../models/userModel');
 const Review = require('../models/reviewModel');
 
-const DB =
-  'mongodb+srv://Armar:01004468937@apis.uj4am.mongodb.net/devcampers?retryWrites=true&w=majority';
+const DB = process.env.DATABASE_CONNECTION.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+);
 
 mongoose.set('autoIndex', true);
 
