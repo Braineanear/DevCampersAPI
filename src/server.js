@@ -22,24 +22,22 @@ const setupWorkerProcesses = () => {
 
   // Iterate on number of cores need to be utilized by an application
   // Current example will utilize all of them
-  for (let i = 0; i < numCores; i++) {
+  for (let i = 0; i < numCores; i += 1) {
     // Creating workers and pushing reference in an array
     // these references can be used to receive messages from workers
     workers.push(cluster.fork());
 
     // Receive messages from worker process
-    workers[i].on('message', function (message) {
-      console.log(message);
-    });
+    workers[i].on('message', (message) => console.log(message));
   }
 
   // Process is clustered on a core and process id is assigned
-  cluster.on('online', function (worker) {
-    console.log(`Worker ${worker.process.pid} is listening`);
-  });
+  cluster.on('online', (worker) =>
+    console.log(`Worker ${worker.process.pid} is listening`)
+  );
 
   // If any of the worker process dies then start a new one by simply forking another one
-  cluster.on('exit', function (worker, code, signal) {
+  cluster.on('exit', (worker, code, signal) => {
     console.log(
       `Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`
     );
@@ -47,15 +45,15 @@ const setupWorkerProcesses = () => {
     cluster.fork();
     workers.push(cluster.fork());
     // Receive messages from worker process
-    workers[workers.length - 1].on('message', function (message) {
-      console.log(message);
-    });
+    workers[workers.length - 1].on('message', (message) =>
+      console.log(message)
+    );
   });
 };
 
 // Setup an express server and define port to listen all incoming requests for this application
 const setUpExpress = () => {
-  dotenv.config({ path: './config/config.env' });
+  dotenv.config({ path: 'config.env' });
 
   const DB = process.env.DATABASE_CONNECTION.replace(
     '<PASSWORD>',

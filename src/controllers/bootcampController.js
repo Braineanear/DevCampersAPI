@@ -211,7 +211,7 @@ exports.bootcampPhotoUpload = catchAsync(async (req, res, next) => {
     limits: { fileSize: process.env.MAX_FILE_UPLOAD }
   }).single('photo');
 
-  upload(req, res, function () {
+  upload(req, res, () => {
     if (req.fileValidationError) {
       return next(
         new AppError('Not an image! Please upload only images.', 400)

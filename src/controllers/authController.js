@@ -8,11 +8,10 @@ const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
 
 // Generate Token
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const signToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE
   });
-};
 
 // Get token, create cookie and send response
 const createSendToken = (user, statusCode, res) => {
@@ -108,7 +107,8 @@ exports.signin = catchAsync(async (req, res, next) => {
 exports.logout = catchAsync(async (req, res, next) => {
   res.cookie('jwt', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
+    secure: true
   });
   res.status(200).json({
     status: 'success',
@@ -164,15 +164,13 @@ exports.protect = catchAsync(async (req, res, next) => {
 // @desc      Specify who can access the route (user / admin / publisher)
 // @route     No Route
 // @access    No Access
-exports.restrictTo = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return next(
-        new AppError('You do not have permission to perform this action', 403)
-      );
-    }
-    next();
-  };
+exports.restrictTo = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.user.role)) {
+    return next(
+      new AppError('You do not have permission to perform this action', 403)
+    );
+  }
+  next();
 };
 
 // @desc      Forgot password
@@ -230,13 +228,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 // @access    Public
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // 1) Get hashed token
-  const hasedToken = crypto
+  const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
     .digest('hex');
 
   const user = await User.findOne({
-    resetPasswordToken: hasedToken,
+    resetPasswordToken: hashedToken,
     resetPasswordExpire: { $gt: Date.now() }
   });
 
@@ -312,6 +310,6 @@ exports.confirmEmail = catchAsync(async (req, res, next) => {
   // 4) Save
   await user.save({ validateBeforeSave: false });
 
-  // 5) eturn token
+  // 5) return token
   createSendToken(user, 200, res);
 });

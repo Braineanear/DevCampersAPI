@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const chalk = require('chalk');
 
 // Load env vars
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: 'config.env' });
 
 // Load models
 const Bootcamp = require('../models/bootcampModel');
@@ -12,8 +12,10 @@ const Course = require('../models/courseModel');
 const User = require('../models/userModel');
 const Review = require('../models/reviewModel');
 
-const DB =
-  'mongodb+srv://Armar:01004468937@apis.uj4am.mongodb.net/devcampers?retryWrites=true&w=majority';
+const DB = process.env.DATABASE_CONNECTION.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
 
 mongoose.set('autoIndex', true);
 
@@ -35,19 +37,19 @@ connectDB();
 
 // Read JSON files
 const bootcamps = JSON.parse(
-  fs.readFileSync(`${__dirname}/../_data/bootcamps.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/../_data/bootcamps.json`, 'utf8')
 );
 
 const courses = JSON.parse(
-  fs.readFileSync(`${__dirname}/../_data/courses.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/../_data/courses.json`, 'utf8')
 );
 
 const users = JSON.parse(
-  fs.readFileSync(`${__dirname}/../_data/users.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/../_data/users.json`, 'utf8')
 );
 
 const reviews = JSON.parse(
-  fs.readFileSync(`${__dirname}/../_data/reviews.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/../_data/reviews.json`, 'utf8')
 );
 
 // Import into DB
