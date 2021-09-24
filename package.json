@@ -42,7 +42,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.21.5",
     "ndb": "^1.1.5",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.13",
     "prettier": "^2.2.1"
   },
   "engines": {
